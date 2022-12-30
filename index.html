@@ -10,7 +10,7 @@
   <body>
     <form>
       <label>phone number:</label><br />
-      <input type="text" id="number"/><br />
+      <input type="text" id="number" /><br />
       <label>message:</label><br />
       <textarea rows="20" cols="100" id="input"></textarea><br />
       <button type="button" onclick="myFunction()">send</button>
@@ -26,7 +26,7 @@
           cache: false,
           data: {
             phoneNumber: number.value,
-            message: txt.value
+            message: txt.value,
           },
         });
       }
