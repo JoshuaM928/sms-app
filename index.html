@@ -10,19 +10,22 @@
   <body>
     <form>
       <label>phone number:</label><br />
-      <input type="text" /><br />
+      <input type="text" id="number"/><br />
       <label>message:</label><br />
       <textarea rows="20" cols="100" id="input"></textarea><br />
       <button type="button" onclick="myFunction()">send</button>
     </form>
     <script defer>
       const txt = document.getElementById("input");
+      const number = document.getElementById("number");
       function myFunction() {
-        console.log(txt.value);
+        // console.log(number.value);
+        // console.log(txt.value);
         $.ajax("http://localhost:3000/", {
           type: "POST",
           cache: false,
           data: {
+            phoneNumber: number.value,
             message: txt.value
           },
         });
