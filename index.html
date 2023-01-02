@@ -12,11 +12,11 @@
       <label>phone number:</label><br />
       <input type="text" id="number" /><br />
       <label>message:</label><br />
-      <textarea rows="20" cols="100" id="input"></textarea><br />
+      <textarea rows="20" cols="100" id="userMessage"></textarea><br />
       <button type="button" onclick="myFunction()">send</button>
     </form>
     <script defer>
-      const txt = document.getElementById("input");
+      const txt = document.getElementById("userMessage");
       const number = document.getElementById("number");
       function myFunction() {
         // console.log(number.value);
@@ -27,6 +27,7 @@
           data: {
             phoneNumber: number.value,
             message: txt.value,
+            sendBtn: 1,
           },
         });
       }

@@ -13,19 +13,27 @@ app.use(express.static("."));
 app.get("/", (req, res) => {
   res.sendStatus(200);
 });
-app.post("/", (req, res) => {
-  client.messages
-    .create({
-      body: req.body.message,
+app.post("/", (req, res, next) => {
+  if (req.body.sendBtn == 1) {
+    client.messages
+      .create({
+        body: req.body.message,
+        from: "+17262684011",
+        to: req.body.phoneNumber,
+      })
+      .then(() => console.log("received"));
+  }
+  if (req.body.To > 0) {
+    console.log("----------------------------");
+    console.log(`incoming message: ${req.body.Body}`);
+    console.log("----------------------------");
+    client.messages.create({
+      body: "received",
       from: "+17262684011",
-      to: req.body.phoneNumber,
-    })
-    .then((message) => console.log(/*message.sid*/));
-  // console.log(req.body);
-});
-app.post("/reply", (req, res) => {
-  console.log(req.body.Body);
+      to: "6268640120",
+    });
+  }
 });
 app.listen(port, () => {
-  console.log(`example app listening on port ${port}`);
+  console.log(`listening on port ${port}`);
 });
