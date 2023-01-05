@@ -9,6 +9,7 @@
   "author": "JoshuaM928",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "twilio": "^2.5.2"
   }

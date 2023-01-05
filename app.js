@@ -7,6 +7,10 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilio = require("twilio");
 const client = require("twilio")(accountSid, authToken);
 
+const replies = [];
+
+const cors = require("cors");
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("."));
@@ -23,17 +27,24 @@ app.post("/", (req, res, next) => {
       })
       .then(() => console.log("received"));
   }
-  if (req.body.To > 0) {
-    console.log("----------------------------");
-    console.log(`incoming message: ${req.body.Body}`);
-    console.log("----------------------------");
-    client.messages.create({
-      body: "received",
-      from: "+17262684011",
-      to: "6268640120",
-    });
-  }
+  next();
 });
+app.post("/reply", (req, res, next) => {
+  console.log("----------------------------");
+  console.log(`incoming message: ${req.body.Body}`);
+  console.log("----------------------------");
+  client.messages.create({
+    body: "received",
+    from: "+17262684011",
+    to: "6268640120",
+  });
+  replies.push(req.body.Body);
+  next();
+});
+app.get("/reply",(req,res,next)=>{
+  res.json(replies)
+  next();
+})
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
