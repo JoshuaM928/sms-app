@@ -1,15 +1,20 @@
 const displayFelid = document.getElementById("field");
-const renderMessage = () => {
+const renderMessage = (arr) => {
+  let i = arr.length - 1;
+  //   console.log(`this is the length ${i}`);
   const paragraph = document.createElement("p");
-  paragraph.textContent = req.body.Body; // line wont work without a request first
+  //   console.log(`this is the value at i: ${arr[--i]}`)
+  paragraph.textContent = arr[i]; // line wont work without a request first
   displayFelid.appendChild(paragraph);
 };
 setInterval(() => {
   fetch("http://127.0.0.1:3000/reply")
     .then((response) => {
       return response.json();
-    }).then((data)=>{
-        console.log(data);
+    })
+    .then((data) => {
+      renderMessage(data);
+      console.log(data);
     })
     .catch((err) => {
       console.log(err);
