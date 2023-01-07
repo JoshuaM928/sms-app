@@ -17,6 +17,26 @@
     </form>
     <div id="field"></div>
     <script defer>
+      /*
+       *  TODO: rename myFunction
+       */
+
+      //  create web socket connection
+      const socket = new WebSocket("ws://localhost:3000");
+
+      //  connection opened
+      socket.addEventListener("open", (event) => {
+        console.log("connected to WS server");
+      });
+
+      //  listen for messages
+      socket.addEventListener("message", (event) => {
+        console.log("message from server", event.data);
+      });
+
+      const sendMessage = () => {
+        socket.send("hello from client");
+      };
       const txt = document.getElementById("userMessage");
       const number = document.getElementById("number");
       function myFunction() {

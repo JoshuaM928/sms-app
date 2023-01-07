@@ -1,6 +1,16 @@
+/**
+ *  TODO: Document code with comments by breaking it into chunks
+ */
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
+let httpServer = app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
+
+const server = require("http").createServer(app);
+const webSocket = require("ws");
+const ws = new webSocket.Server({ server: httpServer });
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -41,10 +51,19 @@ app.post("/reply", (req, res, next) => {
   replies.push(req.body.Body);
   next();
 });
-app.get("/reply",(req,res,next)=>{
-  res.json(replies)
+app.get("/reply", (req, res, next) => {
+  res.json(replies);
   next();
-})
-app.listen(port, () => {
-  console.log(`listening on port ${port}`);
+});
+
+/**
+ * web socket middleware
+ */
+ws.on("open", () => {
+  console.log("new client connected");
+  ws.send("welcome new client");
+  ws.on("message", (message) => {
+    console.log("received: %s", message);
+    ws.send("got your msg its:" + message);
+  });
 });
