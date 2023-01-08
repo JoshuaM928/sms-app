@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <label>phone number:</label><br />
+      <input type="text" /><br />
+      <label>message:</label><br />
+      <textarea rows="20" cols="100" id="userMessage"></textarea><br />
+      <button type="button" onclick="sendMessage()">send</button>
+    </form>
+    <script>
+      let message = document.querySelector("#userMessage");
+      let Body = { data: message.value };
+      let myHeader = new Headers();
+      myHeader.append("Content-Type", "text/html");
+      const request = new Request("http://127.0.0.1:3000/conversation", {
+        method: "POST",
+        body: JSON.stringify(Body),
+      });
+      request.headers = myHeader;
+      function sendMessage() {
+        fetch(request)
+          .then(function promiseResolved(res) {
+            if (res.ok) {
+              console.log(res.body);
+              console.log(`response status code: ${res.status}`);
+            }
+            // return res;
+          })
+          .catch(function promiseRejected(reject) {
+            if (!reject.ok) {
+              console.log(reject.body);
+              console.log(`response status code: ${reject.status}`);
+            }
+          });
+      }
+    </script>
+  </body>
+</html>
