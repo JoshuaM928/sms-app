@@ -16,30 +16,33 @@
     </form>
     <script>
       let message = document.querySelector("#userMessage");
-      let Body = { data: message.value, test: "this is a test" };
-      let myHeader = new Headers();
-      myHeader.append("Content-Type", "text/html");
-      const request = new Request("http://127.0.0.1:3000/conversation", {
-        mode: "no-cors",
+      let Body = { data: message.value };
+      let myHeader = new Headers({ "Content-Type": "application/json" });
+      const request = new Request("http://localhost:3000/conversation", {
         method: "POST",
-        body: Body,
+        body: JSON.stringify({message: message.value}),
+        headers: myHeader,
       });
-      request.headers = myHeader;
+
       function sendMessage() {
         fetch(request)
-          .then(function promiseResolved(res) {
-            if (res.ok) {
-              console.log(res.body);
-              console.log(`response status code: ${res.status}`);
-            }
-            // return res;
+          .then(function resolvedPromise(res) {
+            return res.json();
           })
-          .catch(function promiseRejected(reject) {
-            if (!reject.ok) {
-              console.log(reject.body);
-              console.log(`response status code: ${reject.status}`);
-            }
+          .then(function getData(data) {
+            console.log(data.confirm);
+          })
+          .catch(function unresolvedPromise(err) {
+            console.log(err);
           });
+        // .then(function getRes(res) {
+        //   return res.json();
+        // })
+        // .then(function parsedRes(data) {
+        //   // const body = JSON.parse(data);
+        //   // const body = data;
+        //   console.log(`${data.body}`);
+        // });
       }
     </script>
   </body>
