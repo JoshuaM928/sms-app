@@ -20,7 +20,8 @@ app.get("/conversation", (req, res, next) => {
   res.send("you've made it to the http://127.0.0.1:3000/conversation url");
 });
 app.post("/conversation", (req, res, next) => {
-  console.log(req.body);
+  console.log("HIT")
+  // console.log(req.body);
   res.send("The backend received your message!");
 });
 app.get("/favicon.ico", (req, res, next) => {
