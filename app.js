@@ -18,7 +18,7 @@ app.use(express.static("routes/"));
 app.use(express.json());
 
 /**
- * Twilio routes
+ * Express twilio routes
  */
 app.post("/twilio/send", (req, res, next) => {
   const data = req.body;
@@ -33,19 +33,10 @@ app.post("/twilio/send", (req, res, next) => {
   res.send({ confirm: "confirmation" });
   next();
 });
+
 app.get("/twilio/receive", (req, res, next) => {
   res.send("URI: /twilio/receive");
   console.log("URI: /twilio/receive");
-});
-
-/**
- * Express routes
- */
-app.post("/conversation", (req, res, next) => {
-  const data = req.body;
-  console.log(data.message);
-  res.json({ confirm: "confirmation" });
-  // console.log(req.body);
 });
 
 /**
