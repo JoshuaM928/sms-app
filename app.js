@@ -15,6 +15,7 @@ const app = express();
 const port = 3000;
 app.use(express.static("public/images/"));
 app.use(express.static("routes/"));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 /**
@@ -34,9 +35,9 @@ app.post("/twilio/send", (req, res, next) => {
   next();
 });
 
-app.get("/twilio/receive", (req, res, next) => {
-  res.send("URI: /twilio/receive");
-  console.log("URI: /twilio/receive");
+app.post("/twilio/receive", (req, res, next) => {
+  const data = req.body;
+  console.log(data.Body);
 });
 
 /**
