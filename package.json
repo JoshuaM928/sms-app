@@ -9,6 +9,7 @@
   "author": "JoshuaM928",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "twilio": "^3.84.0"
   }
 }
