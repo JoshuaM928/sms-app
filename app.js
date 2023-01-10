@@ -29,7 +29,7 @@ app.post("/twilio/send", (req, res, next) => {
     from: "+17262684011",
   });
   console.log("-----------------------");
-  console.log(`Incoming Message: ${data.message}`);
+  console.log(`Incoming message request: ${data.message}`);
   console.log("-----------------------");
   res.send({ confirm: "confirmation" });
   next();
@@ -37,7 +37,7 @@ app.post("/twilio/send", (req, res, next) => {
 
 app.post("/twilio/receive", (req, res, next) => {
   const data = req.body;
-  console.log(data.Body);
+  console.log(`New text message:${data.Body}`);
 });
 
 /**
