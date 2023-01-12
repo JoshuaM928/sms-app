@@ -40,6 +40,10 @@ app.post("/twilio/receive", (req, res, next) => {
   console.log(`New text message:${data.Body}`);
 });
 
+app.get("/", (req, res, next) => {
+  console.log("client connected to Express server!");
+});
+
 /**
  * Necessary express routes
  */
@@ -47,6 +51,16 @@ app.get("/favicon.ico", (req, res, next) => {
   res.sendFile(__dirname + "/favicon.ico");
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
+});
+
+/**
+ * Web Socket setup
+ */
+const WebSocket = require("ws");
+const wss = new WebSocket.Server({ server: server });
+wss.on("connection", (ws) => {
+  console.log("client connected to web Socket");
+  ws.send("hello world");
 });
