@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        background-color: rgb(105, 80, 80);
+      }
+    </style>
   </head>
   <body>
     <form>
@@ -19,45 +24,28 @@
        * Connect to web socket
        */
       const socket = new WebSocket("ws://localhost:3000");
-      socket.addEventListener("open", (event) => {
-        socket.send("I'm the client im in!");
+      socket.addEventListener("open", function wsOpen() {
+        socket.send(JSON.stringify({ greet: "CLIENT" }));
       });
-
       /*
        *   Incoming on web socket
        */
       socket.addEventListener("message", (event) => {
-        console.log("message from server ", event.data);
+        const incoming = JSON.parse(event.data);
+        const message = incoming.body;
+        console.log(message.Body);
       });
 
       /*
        * Send message to backend
        */
       function sendMessage() {
-        socket.send("lorem ipsum");
         let phoneNumber = document.querySelector("#number");
         let message = document.querySelector("#userMessage");
-        let Body = { data: message.value };
-        let myHeader = new Headers({ "Content-Type": "application/json" });
-        const request = new Request("http://localhost:3000/twilio/send", {
-          method: "POST",
-          body: JSON.stringify({
-            message: message.value,
-            number: phoneNumber.value,
-          }),
-          headers: myHeader,
-        });
-
-        fetch(request)
-          .then(function resolvedPromise(res) {
-            return res.json();
-          })
-          .then(function getData(data) {
-            console.log(data.confirm);
-          })
-          .catch(function unresolvedPromise(err) {
-            console.log(err);
-          });
+        socket.send(
+          JSON.stringify({ phone: phoneNumber.value, message: message.value })
+        ); 
+        console.log("---------\nSENT\n---------");
       }
     </script>
   </body>
