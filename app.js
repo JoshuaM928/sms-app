@@ -2,9 +2,8 @@
  * My global variables
  */
 let userMessage;
-const EventEmitter = require("events");
-const myEmitter = new EventEmitter();
 let wsClient;
+
 /**
  * Express setup
  */
@@ -23,8 +22,6 @@ const server = app.listen(port, () => {
  * Web Socket setup
  */
 const WebSocket = require("ws");
-
-// const server = require("http").createServer(app);
 const wss = new WebSocket.Server({ server: server });
 
 /**
@@ -57,16 +54,14 @@ app.get("/favicon.ico", (req, res, next) => {
 /**
  * Web Socket logic
  */
-wss.addListener("message",()=>{
-  wsClient.send(JSON.stringify({body: userMessage}));
-})
+wss.addListener("message", () => {
+  wsClient.send(JSON.stringify({ body: userMessage }));
+});
 
 wss.on("connection", (ws) => {
   wsClient = ws;
   ws.on("error", console.error);
-  // ws.listening
   ws.onmessage = (message) => {
-    
     const incoming = JSON.parse(message.data);
     const comparison = Object.keys(incoming);
     let selector = 2;
@@ -92,17 +87,8 @@ wss.on("connection", (ws) => {
       default:
         console.log("DEFAULT SWITCH");
     }
-
-
-
-
-    // if(comparison.length = 1){
-    // console.log("SERVER: ", incoming.greet);
-    // } else if(true){}else{console.log("default case for ")}
   };
-  ws.on("upgrade",(ws)=>{console.log("hit")})
-
   ws.onclose = (close) => {
-    console.log("onClose function working");
+    console.log("CLIENT DISCONNECTED");
   };
 });
