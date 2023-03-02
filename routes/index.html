@@ -17,8 +17,10 @@
       <input type="text" id="number" /><br />
       <label>message:</label><br />
       <textarea rows="20" cols="100" id="userMessage"></textarea><br />
-      <button type="button" onclick="sendMessage()">send</button>
+      <!-- <button type="button" onclick="sendMessage()">send</button> -->
+      <button type="button" onclick="styledMessage()">send</button>
     </form>
+    <div id="autoGeneration"></div>
     <script>
       /*
        * Connect to web socket
@@ -33,7 +35,6 @@
       socket.addEventListener("message", (event) => {
         const incoming = JSON.parse(event.data);
         const message = incoming.body;
-        console.log(message.Body);
       });
 
       /*
@@ -44,9 +45,20 @@
         let message = document.querySelector("#userMessage");
         socket.send(
           JSON.stringify({ phone: phoneNumber.value, message: message.value })
-        ); 
-        console.log("---------\nSENT: ",message.value,"\n---------");
+        );
+        console.log("---------\nSENT: ", message.value, "\n---------");
       }
+
+      /*
+       * test message styling
+       */
+      function styledMessage(){
+        
+        const para = document.createElement("p");
+        para.innerText = message.value;
+
+        document.body.appendChild(para);
+      } 
     </script>
   </body>
 </html>
