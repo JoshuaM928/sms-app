@@ -51,6 +51,10 @@ app.get("/favicon.ico", (req, res, next) => {
   res.sendFile(__dirname + "/favicon.ico");
 });
 
+app.get("/styles/style.css", (req,res, next)=>{
+  res.sendFile(__dirname + "/styles/style.css");
+})
+
 /**
  * Web Socket logic
  */
