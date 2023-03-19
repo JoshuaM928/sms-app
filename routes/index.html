@@ -4,13 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/style.css" />
     <title>Document</title>
-    <style>
-      body {
-        background-color: rgb(105, 80, 80);
-      }
-    </style>
   </head>
   <body>
     <form>
@@ -19,10 +14,17 @@
       <label>message:</label><br />
       <textarea rows="20" cols="100" id="userMessage"></textarea><br />
       <!-- <button type="button" onclick="sendMessage()">send</button> -->
-      <button type="button" onclick="styledMessage()">send</button>
+      <button type="button" onclick="replyElement()">send</button>
     </form>
-    <div id="autoGeneration"></div>
-    <script>
+    <div id="reply-element"></div>
+    <script defer>
+      /*
+       * css helper function
+       */
+       function css(element, style) {
+        for (const property in style) element.style[property] = style[property];
+      }
+
       /*
        * Connect to web socket
        */
@@ -30,6 +32,7 @@
       socket.addEventListener("open", function wsOpen() {
         socket.send(JSON.stringify({ greet: "CLIENT" }));
       });
+      
       /*
        *   Incoming on web socket
        */
@@ -53,13 +56,28 @@
       /*
        * test message styling
        */
-      function styledMessage(){
-        
-        const para = document.createElement("p");
-        para.innerText = message.value;
 
-        document.body.appendChild(para);
-      } 
+      function replyElement(){
+        let message = document.querySelector("#userMessage");
+        const myDiv = document.getElementById("reply-element");
+        const myElement = document.createElement("p");
+        myElement.innerHTML += message.value;
+        myDiv.append(myElement);
+      }
+
+      // function replyElement() {
+      //   let message = document.querySelector("#userMessage");
+      //   const myDiv = document.getElementById("reply-element");
+      //   const myElement = document.createElement("p");
+      //   myElement.setAttribute("id", "note");
+      //   const myNode = document.createTextNode(message.value);
+      //   myElement.appendChild(myNode);
+      //   document.getElementById("reply-element").appendChild(myElement);
+      //   const note = document.querySelector("#note");
+      //   note.style.color = "blue";
+      //   // note.style.margin = "10px";
+      //   // note.style.borderColor = "black";
+      // }
     </script>
   </body>
 </html>
