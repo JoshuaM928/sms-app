@@ -13,15 +13,21 @@
     ></script>
   </head>
   <body>
-    <form>
-      <label>phone number:</label><br />
-      <input type="text" id="number" /><br />
-      <label>message:</label><br />
-      <textarea rows="20" cols="100" id="userMessage"></textarea><br />
-      <!-- <button type="button" onclick="sendMessage()">send</button> -->
-      <button type="button" onclick="replyElement()">send</button>
-    </form>
-    <div id="reply-element"></div>
+    <div id="flex">
+      <div id="child-1">
+        <form>
+          <label>Target number:</label><br />
+          <input type="text" id="number" /><br />
+          <label>message:</label><br />
+          <textarea rows="20" cols="100" id="userMessage"></textarea><br />
+          <!-- <button type="button" onclick="sendMessage()">send</button> -->
+          <button type="button" onclick="replyElement()">send</button>
+        </form>
+      </div>
+      <div id="child-2">
+        <div id="reply-element"></div>
+      </div>
+    </div>
     <script defer>
       /*
        * Connect to web socket
@@ -57,9 +63,10 @@
 
       function replyElement() {
         let message = document.querySelector("#userMessage");
-        $('<p/>')
+        $("<p/>")
           .appendTo(document.getElementById("reply-element"))
-          .css("background-color", "yellow").text(message.value);
+          .css("background-color", "yellow")
+          .text(message.value);
       }
     </script>
   </body>
