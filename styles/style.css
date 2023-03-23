@@ -1,8 +1,8 @@
-body{
-    display: block;
-    margin: 0px;
-    height: 100vh;
-    background-color: black;
+body {
+  display: block;
+  margin: 0px;
+  height: 100vh;
+  background-color: black;
 }
 #flex {
   display: flex;
@@ -11,10 +11,23 @@ body{
 }
 form > label {
   color: rgb(6, 163, 19);
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-weight: bold;
-  font-size: 02.0vw
+  font-size: 02vw;
+  /* display: inline-block; */
 }
-form > #number {
-  display: inline-blockfix;
+input[id="number"] {
+  width: 13vw;
+  height: 02vh;
+  top: 1vh;
+  float: right;
+  position: relative;
+  /* right: 1vw; */
+}
+button[type="button"] {
+  margin-top: 3vh;
+  border-radius: 15%;
+  font-size: 34px;
+  border: 40px;
+  background-color: rgb(6, 163, 19);
 }
